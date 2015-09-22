@@ -20,6 +20,6 @@ define dockeragent::node (
     }
 
   } else {
-    notify { 'Docker has not yet been configured on this node.': }
+    notify { "Cannot create ${title} - Docker has not yet been configured on this node.": }
   }
 }
