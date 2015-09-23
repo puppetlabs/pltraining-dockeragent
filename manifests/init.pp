@@ -34,6 +34,12 @@ class dockeragent {
     }
   }
 
+  file { "/etc/docker/agent/download_catalogs.sh":
+    ensure  => file,
+    mode    => '0755',
+    source  => 'puppet:///modules/dockeragent/download_catalogs.sh',
+  }
+
   file { '/usr/local/bin/run_agents':
     ensure => file,
     mode   => '0755',
