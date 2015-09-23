@@ -32,7 +32,7 @@ small, catalog to compile.
 ```Puppet
 node default {
   include dockeragent::sample::wordpress
-  include dockeragent::sample::users
+  include dockeragent::sample::vhosts
 }
 ```
 
