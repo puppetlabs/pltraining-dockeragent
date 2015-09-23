@@ -30,9 +30,14 @@ For example:
         options[:mode] = :reset
     end
 
-    opts.on("-c [INTERVAL]", "--concurrent [INTERVAL]", Integer,
-            "Run agents concurrently. Specify interval between runs or default to 3.") do |opt|
-        options[:interval] = opt || 3
+    opts.on("-c [COUNT]", "--concurrent [COUNT]",
+            "Run this many agents concurrently. Defaults to 3.") do |opt|
+        options[:concurrent] = opt || '3'
+    end
+
+    opts.on("-d DELAY", "--delay DELAY",
+            "Specify interval between concurrent runs.") do |opt|
+        options[:interval] = opt
     end
 
     opts.on("-i IDENTITY", "--identity IDENTITY", "Run the agent on the specified container.") do |opt|
@@ -81,10 +86,11 @@ when :all
   puts 'Triggering agent runs:'
   containers.each do |identity|
     puts "############# #{identity} ###############"
-    if options.include? :interval
+    if options.include? :concurrent
+      options[:interval] ||= '3'
       # Detach from process so we don't have to wait for it to complete
-      system('docker', 'exec', '-d', identity, 'puppet', 'agent', '-t', *ARGV)
-      sleep options[:interval]
+      system('docker', 'exec', '-d', identity, 'download_catalogs.sh', options[:concurrent], options[:interval])
+      sleep options[:interval].to_i
     else
       system('docker', 'exec', identity, 'puppet', 'agent', '-t', *ARGV)
     end
