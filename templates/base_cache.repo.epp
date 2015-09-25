@@ -1,6 +1,6 @@
 [base_cache]
-baseurl=http://<%= $server_ip %>:8140/packages/yum/base/x86_64
+baseurl=http://<%= $yum_server %>:8140/packages/yum/base/x86_64
 gpgcheck=0
 enabled=1
 name=Base package repo hosted on master
-priority=10
+priority=1
