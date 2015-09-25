@@ -1,0 +1,5 @@
+[epel_cache]
+baseurl=https://<%= $yum_server %>:8140/packages/yum/epel/x86_64
+enabled=1
+name=EPEL packages hosted on the master
+priority=1

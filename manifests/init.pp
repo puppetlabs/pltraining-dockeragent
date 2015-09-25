@@ -1,7 +1,12 @@
 # This Class sets up the docker environment and image(s)
-#
-class dockeragent {
+
+class dockeragent (
+  $registry = undef,
+  $yum_server = 'master.puppetlabs.vm',
+){
   include docker
+
+  $yum_server_ip = getaddress($yum_server)
 
   $container_volumes =  $::os['release']['major'] ? {
     '6' => [
@@ -22,15 +27,24 @@ class dockeragent {
 
   $docker_files = [
     "Dockerfile",
-    "base_local.repo",
-    "epel_local.repo",
+    "base_cache.repo",
+    "epel_cache.repo",
     "puppet.conf",
-    "updates_local.repo",
+    "updates_cache.repo",
+    "yum.conf",
   ]
+  $image_name = $registry ? {
+    undef   => 'centos',
+    default => "${registry}/centos",
+  }
   $docker_files.each |$docker_file|{
     file { "/etc/docker/agent/${docker_file}":
-      ensure  => file,
-      content => epp("dockeragent/${docker_file}.epp",{ 'os_major' => $::os['release']['major'] }),
+      ensure        => file,
+      content       => epp("dockeragent/${docker_file}.epp",{
+        'os_major'  => $::os['release']['major'],
+        'yum_server' => $yum_server_ip,
+        'basename'  => $image_name,
+        }),
     }
   }
 

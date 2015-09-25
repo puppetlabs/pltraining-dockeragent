@@ -1,0 +1,5 @@
+[base_cache]
+baseurl=https://<%= $yum_server %>:8140/packages/yum/base/x86_64
+enabled=1
+name=Base package repo hosted on master
+priority=1
