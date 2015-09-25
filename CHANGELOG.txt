@@ -2,6 +2,10 @@
 
 ## Release Notes
 
+### v0.0.2
+
+* Use classroom master for yum repos and docker registry
+
 ### v0.0.1
 
 * Initial release
