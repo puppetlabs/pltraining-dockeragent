@@ -5,8 +5,6 @@ MAINTAINER Josh Samuelson <js@puppetlabs.com>
 ENV HOME /root/
 ENV TERM xterm
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/puppet/bin
-RUN rm /etc/yum.repos.d/CentOS*
-RUN yum clean all
 ADD base_cache.repo /etc/yum.repos.d/base_local.repo
 ADD epel_cache.repo /etc/yum.repos.d/epel_local.repo
 ADD updates_cache.repo /etc/yum.repos.d/updates_local.repo
