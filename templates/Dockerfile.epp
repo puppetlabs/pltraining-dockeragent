@@ -10,6 +10,7 @@ RUN yum clean all
 ADD base_cache.repo /etc/yum.repos.d/base_local.repo
 ADD epel_cache.repo /etc/yum.repos.d/epel_local.repo
 ADD updates_cache.repo /etc/yum.repos.d/updates_local.repo
+ADD yum.conf /etc/yum.conf
 RUN yum -y install  tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos
 RUN gem install multipart-post -v 1.2.0
 RUN rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-<%= $os_major %>.noarch.rpm

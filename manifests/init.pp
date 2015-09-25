@@ -5,7 +5,7 @@ class dockeragent (
   $yum_server = 'master.puppetlabs.vm',
 ){
   include docker
-  
+
   $yum_server_ip = getaddress($yum_server)
 
   $container_volumes =  $::os['release']['major'] ? {
@@ -31,6 +31,7 @@ class dockeragent (
     "epel_cache.repo",
     "puppet.conf",
     "updates_cache.repo",
+    "yum.conf",
   ]
   $image_name = $registry ? {
     undef   => 'centos',
