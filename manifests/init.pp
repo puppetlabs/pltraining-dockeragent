@@ -35,10 +35,11 @@ class dockeragent (
   }
   $docker_files.each |$docker_file|{
     file { "/etc/docker/agent/${docker_file}":
-      ensure  => file,
-      content => epp("dockeragent/${docker_file}.epp",{
-        'os_major' => $::os['release']['major'],
-        'basename' => $image_name,
+      ensure        => file,
+      content       => epp("dockeragent/${docker_file}.epp",{
+        'os_major'  => $::os['release']['major'],
+        'server_ip' => $::server_ip,
+        'basename'  => $image_name,
         }),
     }
   }
