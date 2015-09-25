@@ -1,6 +1,8 @@
 # This Class sets up the docker environment and image(s)
-#
-class dockeragent {
+
+class dockeragent (
+  $registry = undef,
+){
   include docker
 
   $container_volumes =  $::os['release']['major'] ? {
@@ -27,10 +29,17 @@ class dockeragent {
     "puppet.conf",
     "updates_local.repo",
   ]
+  $image_name = $registry ? {
+    undef   => 'centos',
+    default => "${registry}/centos",
+  }
   $docker_files.each |$docker_file|{
     file { "/etc/docker/agent/${docker_file}":
       ensure  => file,
-      content => epp("dockeragent/${docker_file}.epp",{ 'os_major' => $::os['release']['major'] }),
+      content => epp("dockeragent/${docker_file}.epp",{
+        'os_major' => $::os['release']['major'],
+        'basename' => $image_name,
+        }),
     }
   }
 
