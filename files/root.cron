@@ -1,0 +1,2 @@
+# Puppet Name: pe-mcollective-metadata
+0,15,30,45 * * * * /usr/local/bin/refresh-mcollective-metadata 2>&1 >>/var/log/puppetlabs/mcollective-metadata-cron.log
