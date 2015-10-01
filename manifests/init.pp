@@ -54,6 +54,18 @@ class dockeragent (
     source  => 'puppet:///modules/dockeragent/download_catalogs.sh',
   }
 
+  file { "/etc/docker/agent/refresh-mcollective-metadata":
+    ensure  => file,
+    mode    => '0755',
+    source  => 'puppet:///modules/dockeragent/refresh-mcollective-metadata',
+  }
+
+  file { "/etc/docker/agent/root.cron":
+    ensure  => file,
+    mode    => '0644',
+    source  => 'puppet:///modules/dockeragent/root.cron',
+  }
+
   file { '/usr/local/bin/run_agents':
     ensure => file,
     mode   => '0755',

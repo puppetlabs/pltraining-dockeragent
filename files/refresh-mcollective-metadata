@@ -1,0 +1,15 @@
+#!/opt/puppetlabs/puppet/bin/ruby
+
+require "json"
+require "yaml"
+
+   puppetCmd = "/opt/puppetlabs/bin/puppet"
+facts = %x(#{puppetCmd} facts)
+facts_j = JSON.parse(facts)
+facts_y = YAML.dump(facts_j["values"])
+
+File.open('/etc/puppetlabs/mcollective/facts.yaml.new', 'w') do |f|
+  f.puts facts_y
+end
+
+File.rename('/etc/puppetlabs/mcollective/facts.yaml.new', '/etc/puppetlabs/mcollective/facts.yaml')
