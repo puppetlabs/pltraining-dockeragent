@@ -17,3 +17,4 @@ ADD puppet.conf /etc/puppetlabs/puppet/puppet.conf
 ADD download_catalogs.sh /usr/local/bin/download_catalogs.sh
 ADD refresh-mcollective-metadata /usr/local/bin/refresh-mcollective-metadata
 ADD root.cron /var/spool/cron/root
+ADD crond.pam /etc/pam.d/crond

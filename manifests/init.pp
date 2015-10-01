@@ -65,6 +65,12 @@ class dockeragent (
     mode    => '0644',
     source  => 'puppet:///modules/dockeragent/root.cron',
   }
+  
+  file { "/etc/docker/agent/crond.pam":
+    ensure  => file,
+    mode    => '0644',
+    source  => 'puppet:///modules/dockeragent/crond.pam',
+  }
 
   file { '/usr/local/bin/run_agents':
     ensure => file,
