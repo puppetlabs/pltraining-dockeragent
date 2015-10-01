@@ -18,8 +18,8 @@ define dockeragent::node (
   }
 
   exec { "docker exec -d ${title} /sbin/init 3":
-    path    => ['/usr/bin','/bin'],
-    unless  => "docker exec ${title} runlevel | grep '3$'",
-    require => Docker::Run[$title],
+    path         => ['/usr/bin','/bin'],
+    refresh_only => true,
+    subscribe      => Docker::Run[$title],
   }
 }
