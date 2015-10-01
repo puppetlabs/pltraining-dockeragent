@@ -19,7 +19,7 @@ define dockeragent::node (
 
   exec { "docker exec -d ${title} /sbin/init 3":
     path         => ['/usr/bin','/bin'],
-    refresh_only => true,
-    subscribe      => Docker::Run[$title],
+    refreshonly  => true,
+    subscribe    => Docker::Run[$title],
   }
 }
