@@ -8,7 +8,6 @@ define dockeragent::node (
     hostname         => $title,
     image            => 'agent',
     command          => '/sbin/init 3',
-    use_name         => true,
     privileged       => true,
     ports            => $ports,
     volumes          => $dockeragent::container_volumes,
