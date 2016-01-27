@@ -16,7 +16,7 @@ define dockeragent::node (
     ],
   }
 
-  exec { "docker exec -d ${title} /sbin/init 3":
+  exec { "docker exec -d ${title} /usr/lib/systemd/systemd":
     path         => ['/usr/bin','/bin'],
     refreshonly  => true,
     subscribe    => Docker::Run[$title],
