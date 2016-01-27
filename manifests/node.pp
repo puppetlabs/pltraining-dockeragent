@@ -7,7 +7,7 @@ define dockeragent::node (
   docker::run { $title:
     hostname         => $title,
     image            => 'agent',
-    command          => '/sbin/init 3',
+    command          => '/usr/lib/systemd/systemd',
     ports            => $ports,
     volumes          => $dockeragent::container_volumes,
     extra_parameters => [
