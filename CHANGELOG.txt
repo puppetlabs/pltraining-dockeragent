@@ -2,6 +2,10 @@
 
 ## Release Notes
 
+### v0.0.5
+
+* use maci0/systemd for more stable init system
+
 ### v0.0.4
 
 * Minor corrections to track upstream docker module.
