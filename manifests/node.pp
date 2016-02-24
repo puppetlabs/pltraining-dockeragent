@@ -15,10 +15,4 @@ define dockeragent::node (
       '--restart=always',
     ],
   }
-
-  exec { "docker exec -d ${title} /usr/lib/systemd/systemd":
-    path         => ['/usr/bin','/bin'],
-    refreshonly  => true,
-    subscribe    => Docker::Run[$title],
-  }
 }
