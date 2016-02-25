@@ -1,6 +1,6 @@
-# Builds a basic Centos container with pe-agent installed
+# Builds a basic Centos<%= $os_major %> container with pe-agent installed
 # This image is for training purposes and is not intended for production environments.
-FROM maci0/systemd
+FROM <%= $basename %>
 MAINTAINER Josh Samuelson <js@puppetlabs.com>
 ENV HOME /root/
 ENV TERM xterm

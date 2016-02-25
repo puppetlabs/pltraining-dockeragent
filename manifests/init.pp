@@ -34,14 +34,13 @@ class dockeragent (
     "yum.conf",
   ]
   $image_name = $registry ? {
-    undef   => 'centos',
-    default => "${registry}/centos",
+    undef   => 'maci0/systemd',
+    default => "${registry}/maci0/systemd",
   }
   $docker_files.each |$docker_file|{
     file { "/etc/docker/agent/${docker_file}":
       ensure        => file,
       content       => epp("dockeragent/${docker_file}.epp",{
-        'os_major'  => $::os['release']['major'],
         'yum_server' => $yum_server_ip,
         'basename'  => $image_name,
         }),
