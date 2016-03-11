@@ -6,8 +6,6 @@ class dockeragent (
 ){
   include docker
 
-  $yum_server_ip = getaddress($yum_server)
-
   $container_volumes =  $::os['release']['major'] ? {
     '6' => [
       '/var/yum:/var/yum',
@@ -42,7 +40,7 @@ class dockeragent (
       ensure         => file,
       content        => epp("dockeragent/${docker_file}.epp",{
         'os_major'   => $::os['release']['major'],
-        'yum_server' => $yum_server_ip,
+        'yum_server' => $yum_server,
         'basename'   => $image_name,
         }),
     }
