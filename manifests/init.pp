@@ -3,6 +3,7 @@
 class dockeragent (
   $registry = undef,
   $yum_server = 'master.puppetlabs.vm',
+  $yum_cache = false,
 ){
   include docker
 
@@ -42,6 +43,7 @@ class dockeragent (
         'os_major'   => $::os['release']['major'],
         'yum_server' => $yum_server,
         'basename'   => $image_name,
+        'yum_cache'  => $yum_cache,
         }),
     }
   }

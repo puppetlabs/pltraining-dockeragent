@@ -16,7 +16,7 @@
     }
   ],
   "name": "pltraining-dockeragent",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "author": "pltraining",
   "summary": "Manages Puppet Labs training classroom environments",
   "license": "Apache 2.0",

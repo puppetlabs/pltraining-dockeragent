@@ -2,6 +2,10 @@
 
 ## Release Notes
 
+## v0.0.7
+
+* Fix yum server name for Infrastructure Design
+
 ## v0.0.6
 
 * fix bug from v0.0.5 with hardcoded image name
