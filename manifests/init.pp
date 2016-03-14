@@ -3,10 +3,9 @@
 class dockeragent (
   $registry = undef,
   $yum_server = 'master.puppetlabs.vm',
+  $yum_cache = false,
 ){
   include docker
-
-  $yum_server_ip = getaddress($yum_server)
 
   $container_volumes =  $::os['release']['major'] ? {
     '6' => [
@@ -42,8 +41,9 @@ class dockeragent (
       ensure         => file,
       content        => epp("dockeragent/${docker_file}.epp",{
         'os_major'   => $::os['release']['major'],
-        'yum_server' => $yum_server_ip,
+        'yum_server' => $yum_server,
         'basename'   => $image_name,
+        'yum_cache'  => $yum_cache,
         }),
     }
   }
