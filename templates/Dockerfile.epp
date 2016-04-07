@@ -11,7 +11,12 @@ ADD epel_cache.repo /etc/yum.repos.d/epel_cache.repo
 ADD updates_cache.repo /etc/yum.repos.d/updates_cache.repo
 <% } -%>
 ADD yum.conf /etc/yum.conf
-RUN yum -y install  tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos
+<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos' -%>
+<% if $yum_cache { -%>
+RUN echo "<%= $serverip %> master.puppetlabs.vm" >> /etc/hosts && yum -y install <%= $packages %>
+<% } else { -%>
+RUN yum -y install <%= $packages %>
+<% } -%>
 RUN gem install multipart-post -v 1.2.0
 RUN rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-<%= $os_major %>.noarch.rpm
 RUN yum -y install puppet-agent
