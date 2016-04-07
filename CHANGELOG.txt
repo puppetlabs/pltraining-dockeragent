@@ -2,6 +2,11 @@
 
 ## Release Notes
 
+## v0.0.8
+
+* Pin to known good docker module
+* Fix cached yum repo
+
 ## v0.0.7
 
 * Fix yum server name for Infrastructure Design
