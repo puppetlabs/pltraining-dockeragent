@@ -1,12 +1,13 @@
 # Create and run a Docker containerized Puppet Agent
 define dockeragent::node (
   $ports = undef,
+  $image = 'agent',
 ) {
   require dockeragent
 
   docker::run { $title:
     hostname         => $title,
-    image            => 'agent',
+    image            => $image,
     command          => '/usr/lib/systemd/systemd',
     ports            => $ports,
     volumes          => $dockeragent::container_volumes,

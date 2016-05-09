@@ -1,4 +1,5 @@
 # This defined type sets up the docker environment and image(s)
+# This should ONLY be run from the main dockeragent class
 
 define dockeragent::image (
   $registry = undef,
@@ -6,9 +7,8 @@ define dockeragent::image (
   $yum_cache = false,
   $install_agent = true,
 ){
-  require dockeragent
 
-  file { ['/etc/docker/${title}/']:
+  file { "/etc/docker/${title}/":
     ensure  => directory,
     require => Class['docker'],
   }
@@ -74,14 +74,8 @@ define dockeragent::image (
     source  => 'puppet:///modules/dockeragent/crond.pam',
   }
 
-  file { '/usr/local/bin/run_agents':
-    ensure => file,
-    mode   => '0755',
-    source => 'puppet:///modules/dockeragent/run_agents',
-  }
-
   docker::image {$title:
-    docker_dir => "/etc/${title}/agent/",
-    require    => File["/etc/${title}/agent/"],
+    docker_dir => "/etc/docker/${title}/",
+    require    => File["/etc/docker/${title}/"],
   }
 }

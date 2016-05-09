@@ -24,8 +24,9 @@ class dockeragent (
   }
 
   if $create_no_agent_image {
-  dockeragent::image { 'agent':
-    install_agent => true,
+    dockeragent::image { 'agent':
+      install_agent => true,
+    }
   } 
 
 }
