@@ -13,18 +13,6 @@ define dockeragent::image (
     require => Class['docker'],
   }
 
-  $container_volumes =  $::os['release']['major'] ? {
-    '6' => [
-      '/var/yum:/var/yum',
-      '/etc/docker/ssl_dir/:/etc/puppetlabs/puppet/ssl',
-    ],
-    '7' => [
-      '/var/yum:/var/yum',
-      '/sys/fs/cgroup:/sys/fs/cgroup:ro',
-      '/etc/docker/ssl_dir/:/etc/puppetlabs/puppet/ssl',
-    ],
-  }
-
   $docker_files = [
     "Dockerfile",
     "base_cache.repo",
