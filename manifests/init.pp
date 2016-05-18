@@ -2,7 +2,7 @@
 
 class dockeragent (
   $create_agent_image    = true,
-  $create_no_agent_image = true,
+  $create_no_agent_image = false,
 ){
   include docker
 
