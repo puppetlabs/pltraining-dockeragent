@@ -1,5 +1,6 @@
 # Create and run a Docker containerized Puppet Agent
 define dockeragent::node (
+  $ensure = present,
   $ports = undef,
   $image = 'agent',
 ) {
@@ -18,6 +19,7 @@ define dockeragent::node (
   }
 
   docker::run { $title:
+    ensure           => $ensure,
     hostname         => $title,
     image            => $image,
     command          => '/usr/lib/systemd/systemd',
