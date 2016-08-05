@@ -6,6 +6,7 @@ class dockeragent (
   $registry              = undef,
   $yum_server            = 'master.puppetlabs.vm',
   $yum_cache             = false,
+  $lvm_bashrc            = false,
 ){
   include docker
 
@@ -25,6 +26,7 @@ class dockeragent (
       install_agent => false,
       registry      => $registry,
       yum_server    => $yum_server,
+      lvm_bashrc    => $lvm_bashrc,
     }
   }
 
@@ -34,6 +36,7 @@ class dockeragent (
       registry      => $registry,
       yum_server    => $yum_server,
       yum_cache     => $yum_cache,
+      lvm_bashrc    => $lvm_bashrc,
     }
   } 
 
