@@ -6,6 +6,7 @@ define dockeragent::image (
   $yum_server = 'master.puppetlabs.vm',
   $yum_cache = false,
   $install_agent = true,
+  $lvm_bashrc = false,
 ){
 
   file { "/etc/docker/${title}/":
@@ -34,7 +35,21 @@ define dockeragent::image (
         'basename'      => $image_name,
         'yum_cache'     => $yum_cache,
         'install_agent' => $install_agent,
+        'lvm_bashrc'    => $lvm_bashrc,
         }),
+    }
+  }
+
+  if $lvm_bashrc {
+    file { "/etc/docker/${title}/bashrc":
+      ensure => file,
+      mode   => '0755',
+      source => 'puppet:///modules/dockeragent/bashrc',
+    }
+    file { "/etc/docker/${title}/bash_profile":
+      ensure => file,
+      mode   => '0755',
+      source => 'puppet:///modules/dockeragent/bash_profile',
     }
   }
 
