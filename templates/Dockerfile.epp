@@ -30,7 +30,7 @@ ADD puppet.conf /etc/puppetlabs/puppet/puppet.conf
 ADD download_catalogs.sh /usr/local/bin/download_catalogs.sh
 ADD refresh-mcollective-metadata /usr/local/bin/refresh-mcollective-metadata
 <% } -%>
-<% if $lvm_bashrc %>
+<% if $lvm_bashrc { %>
 ADD bashrc /root/.bashrc
 ADD bash_profile /root/.bash_profile
 <% } -%>
