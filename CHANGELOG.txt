@@ -2,6 +2,17 @@
 
 ## Release Notes
 
+## v0.0.10
+
+* Support for privileged mode
+* ssh service on containers
+* Improved experience on container command line
+* Optional build image or use existing
+
+## v0.0.9
+
+* Unpin docker module
+
 ## v0.0.8
 
 * Pin to known good docker module
