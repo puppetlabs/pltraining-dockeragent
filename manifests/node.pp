@@ -2,6 +2,7 @@
 define dockeragent::node (
   $ensure = present,
   $ports = undef,
+  $privileged = false,
   $image = 'agent',
 ) {
   require dockeragent
@@ -24,6 +25,7 @@ define dockeragent::node (
     image            => $image,
     command          => '/usr/lib/systemd/systemd',
     ports            => $ports,
+    privileged       => $privileged,
     volumes          => $container_volumes,
     extra_parameters => [
       "--add-host \"${::fqdn} puppet:${::ipaddress_docker0}\"",
