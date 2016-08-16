@@ -1,6 +1,16 @@
 Facter.add(:docker_hosts) do
   setcode do
-    containers = `docker ps | awk '{if(NR>1) print $NF}'`.split
-    containers.inject({}){ |memo, container| memo[container] = `/bin/docker inspect -f '{{ .NetworkSettings.IPAddress }}' #{container}`.chomp; memo }
+    containers = Facter::Util::Resolution.exec('docker ps')
+    next unless containers
+
+    hosts = {}
+    containers = containers.split("\n")
+    containers.shift
+    containers.each do |line|
+      name = line.split.last
+      hosts[name] = Facter::Util::Resolution.exec("docker inspect -f '{{ .NetworkSettings.IPAddress }}' #{name}")
+    end
+
+    hosts
   end
 end
