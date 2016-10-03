@@ -28,7 +28,6 @@
     {"name":"garethr/docker",    "version_requirement":">=5.1.0"},
     {"name":"hunner/wordpress",  "version_requirement":">=1.0.0"},
     {"name":"puppetlabs/apache", "version_requirement":">=1.0.0"},
-    {"name":"puppetlabs/concat", "version_requirement":">=2.0.0"},
-
+    {"name":"puppetlabs/concat", "version_requirement":">=2.0.0"}
   ]
 }
