@@ -2,6 +2,11 @@
 
 ## Release Notes
 
+## v0.0.11
+
+* Tired of seeing 'docker: command not found'?
+* This fixes the broken fact.
+
 ## v0.0.10
 
 * Support for privileged mode
