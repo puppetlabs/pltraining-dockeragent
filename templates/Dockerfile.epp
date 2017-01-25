@@ -1,7 +1,7 @@
 # Builds a basic Centos<%= $os_major %> container with pe-agent installed
 # This image is for training purposes and is not intended for production environments.
 FROM <%= $basename %>
-MAINTAINER Josh Samuelson <js@puppetlabs.com>
+MAINTAINER Josh Samuelson <js@puppet.com>
 ENV HOME /root/
 ENV TERM xterm
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/puppet/bin

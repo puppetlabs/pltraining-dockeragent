@@ -23,8 +23,8 @@ define dockeragent::image (
     "yum.conf",
   ]
   $image_name = $registry ? {
-    undef   => 'maci0/systemd',
-    default => "${registry}/maci0/systemd",
+    undef   => 'centos:7',
+    default => "${registry}/centos:7",
   }
   $docker_files.each |$docker_file|{
     file { "/etc/docker/${title}/${docker_file}":

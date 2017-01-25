@@ -7,17 +7,11 @@ define dockeragent::node (
 ) {
   require dockeragent
 
-  $container_volumes =  $::os['release']['major'] ? {
-    '6' => [
-      '/var/yum:/var/yum',
-      '/etc/docker/ssl_dir/:/etc/puppetlabs/puppet/ssl',
-    ],
-    '7' => [
-      '/var/yum:/var/yum',
-      '/sys/fs/cgroup:/sys/fs/cgroup:ro',
-      '/etc/docker/ssl_dir/:/etc/puppetlabs/puppet/ssl',
-    ],
-  }
+  $container_volumes = [
+    '/var/yum:/var/yum',
+    '/sys/fs/cgroup:/sys/fs/cgroup:ro',
+    '/etc/docker/ssl_dir/:/etc/puppetlabs/puppet/ssl',
+  ]
 
   docker::run { $title:
     ensure           => $ensure,
@@ -27,9 +21,18 @@ define dockeragent::node (
     ports            => $ports,
     privileged       => $privileged,
     volumes          => $container_volumes,
+    env              =>  [
+      'RUNLEVEL=3',
+      'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      'HOME=/root/',
+      'TERM=xterm'
+    ],
     extra_parameters => [
       "--add-host \"${::fqdn} puppet:${::ipaddress_docker0}\"",
+      '--security-opt seccomp=unconfined',
       '--restart=always',
+      '--tmpfs /tmp',
+      '--tmpfs /run',
     ],
   }
 
