@@ -2,6 +2,9 @@
 
 ## Release Notes
 
+## v0.0.12
+* Use centos:7 container
+
 ## v0.0.11
 
 * Tired of seeing 'docker: command not found'?
