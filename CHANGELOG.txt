@@ -2,6 +2,9 @@
 
 ## Release Notes
 
+## v0.0.13
+* Fix path inside containers
+
 ## v0.0.12
 * Use centos:7 container
 
