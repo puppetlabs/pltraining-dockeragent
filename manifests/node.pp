@@ -23,7 +23,7 @@ define dockeragent::node (
     volumes          => $container_volumes,
     env              =>  [
       'RUNLEVEL=3',
-      'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin',
+      'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin',
       'HOME=/root/',
       'TERM=xterm'
     ],
