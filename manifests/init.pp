@@ -7,6 +7,7 @@ class dockeragent (
   $yum_server            = 'master.puppetlabs.vm',
   $yum_cache             = false,
   $lvm_bashrc            = false,
+  $install_dev_tools     = false,
 ){
   include docker
 
@@ -23,20 +24,22 @@ class dockeragent (
 
   if $create_no_agent_image {
     dockeragent::image { 'no_agent':
-      install_agent => false,
-      registry      => $registry,
-      yum_server    => $yum_server,
-      lvm_bashrc    => $lvm_bashrc,
+      install_agent     => false,
+      registry          => $registry,
+      yum_server        => $yum_server,
+      lvm_bashrc        => $lvm_bashrc,
+      install_dev_tools => $install_dev_tools,
     }
   }
 
   if $create_agent_image {
     dockeragent::image { 'agent':
-      install_agent => true,
-      registry      => $registry,
-      yum_server    => $yum_server,
-      yum_cache     => $yum_cache,
-      lvm_bashrc    => $lvm_bashrc,
+      install_agent     => true,
+      registry          => $registry,
+      yum_server        => $yum_server,
+      yum_cache         => $yum_cache,
+      lvm_bashrc        => $lvm_bashrc,
+      install_dev_tools => $install_dev_tools,
     }
   } 
 

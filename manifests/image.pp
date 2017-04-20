@@ -7,6 +7,7 @@ define dockeragent::image (
   $yum_cache = false,
   $install_agent = true,
   $lvm_bashrc = false,
+  $install_dev_tools = false,
 ){
 
   file { "/etc/docker/${title}/":
@@ -30,12 +31,13 @@ define dockeragent::image (
     file { "/etc/docker/${title}/${docker_file}":
       ensure            => file,
       content           => epp("dockeragent/${docker_file}.epp",{
-        'os_major'      => $::os['release']['major'],
-        'yum_server'    => $yum_server,
-        'basename'      => $image_name,
-        'yum_cache'     => $yum_cache,
-        'install_agent' => $install_agent,
-        'lvm_bashrc'    => $lvm_bashrc,
+        'os_major'          => $::os['release']['major'],
+        'yum_server'        => $yum_server,
+        'basename'          => $image_name,
+        'yum_cache'         => $yum_cache,
+        'install_agent'     => $install_agent,
+        'lvm_bashrc'        => $lvm_bashrc,
+        'install_dev_tools' => $install_dev_tools,
         }),
     }
   }

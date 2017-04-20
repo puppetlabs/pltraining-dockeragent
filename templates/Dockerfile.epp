@@ -17,6 +17,9 @@ RUN echo "<%= $serverip %> master.puppetlabs.vm" >> /etc/hosts && yum -y install
 <% } else { -%>
 RUN yum -y install <%= $packages %>
 <% } -%>
+<% if $install_dev_tools { -%>
+RUN yum -y groupinstall 'Development Tools'
+<% } -%>
 RUN gem install multipart-post -v 1.2.0
 <% if $install_agent { -%>
 RUN rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-<%= $os_major %>.noarch.rpm
