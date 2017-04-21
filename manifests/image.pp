@@ -8,6 +8,7 @@ define dockeragent::image (
   $install_agent = true,
   $lvm_bashrc = false,
   $install_dev_tools = false,
+  $learning_user = false,
 ){
 
   file { "/etc/docker/${title}/":
@@ -38,6 +39,7 @@ define dockeragent::image (
         'install_agent'     => $install_agent,
         'lvm_bashrc'        => $lvm_bashrc,
         'install_dev_tools' => $install_dev_tools,
+        'learning_user'     => $learning_user,
         }),
     }
   }

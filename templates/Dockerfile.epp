@@ -37,5 +37,13 @@ ADD refresh-mcollective-metadata /usr/local/bin/refresh-mcollective-metadata
 ADD bashrc /root/.bashrc
 ADD bash_profile /root/.bash_profile
 <% } -%>
+<% if $learning_user { -%>
+RUN useradd -ms /bin/bash learning
+RUN echo 'learning:puppet' | chpasswd
+<% if $lvm_bashrc { %>
+ADD bashrc /home/learning/.bashrc
+ADD bash_profile /home/learning/.bash_profile
+<% } -%>
+<% } -%>
 ADD root.cron /var/spool/cron/root
 ADD crond.pam /etc/pam.d/crond

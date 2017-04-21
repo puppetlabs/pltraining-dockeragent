@@ -8,6 +8,7 @@ class dockeragent (
   $yum_cache             = false,
   $lvm_bashrc            = false,
   $install_dev_tools     = false,
+  $learning_user         = false,
 ){
   include docker
 
@@ -29,6 +30,7 @@ class dockeragent (
       yum_server        => $yum_server,
       lvm_bashrc        => $lvm_bashrc,
       install_dev_tools => $install_dev_tools,
+      learning_user     => $learning_user,
     }
   }
 
@@ -39,7 +41,7 @@ class dockeragent (
       yum_server        => $yum_server,
       yum_cache         => $yum_cache,
       lvm_bashrc        => $lvm_bashrc,
-      install_dev_tools => $install_dev_tools,
+      learning_user     => $learning_user,
     }
   } 
 
