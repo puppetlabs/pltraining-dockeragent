@@ -40,6 +40,7 @@ ADD bash_profile /root/.bash_profile
 <% if $learning_user { -%>
 RUN useradd -ms /bin/bash learning
 RUN echo 'learning:puppet' | chpasswd
+RUN usermod -aG wheel learning
 <% if $lvm_bashrc { %>
 ADD bashrc /home/learning/.bashrc
 ADD bash_profile /home/learning/.bash_profile
