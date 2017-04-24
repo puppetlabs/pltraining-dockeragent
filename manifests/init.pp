@@ -28,6 +28,7 @@ class dockeragent (
       install_agent     => false,
       registry          => $registry,
       yum_server        => $yum_server,
+      yum_cache         => $yum_cache,
       lvm_bashrc        => $lvm_bashrc,
       install_dev_tools => $install_dev_tools,
       learning_user     => $learning_user,
@@ -41,6 +42,7 @@ class dockeragent (
       yum_server        => $yum_server,
       yum_cache         => $yum_cache,
       lvm_bashrc        => $lvm_bashrc,
+      install_dev_tools => $install_dev_tools,
       learning_user     => $learning_user,
     }
   } 

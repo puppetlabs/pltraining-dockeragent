@@ -33,7 +33,7 @@ ADD puppet.conf /etc/puppetlabs/puppet/puppet.conf
 ADD download_catalogs.sh /usr/local/bin/download_catalogs.sh
 ADD refresh-mcollective-metadata /usr/local/bin/refresh-mcollective-metadata
 <% } -%>
-<% if $lvm_bashrc { %>
+<% if $lvm_bashrc { -%>
 ADD bashrc /root/.bashrc
 ADD bash_profile /root/.bash_profile
 <% } -%>
@@ -41,7 +41,7 @@ ADD bash_profile /root/.bash_profile
 RUN useradd -ms /bin/bash learning
 RUN echo 'learning:puppet' | chpasswd
 RUN usermod -aG wheel learning
-<% if $lvm_bashrc { %>
+<% if $lvm_bashrc { -%>
 ADD bashrc /home/learning/.bashrc
 ADD bash_profile /home/learning/.bash_profile
 <% } -%>
