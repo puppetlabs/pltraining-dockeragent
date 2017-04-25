@@ -40,6 +40,7 @@ define dockeragent::image (
         'lvm_bashrc'        => $lvm_bashrc,
         'install_dev_tools' => $install_dev_tools,
         'learning_user'     => $learning_user,
+        'serverip'          => $::ipaddress,
         }),
     }
   }
