@@ -5,11 +5,6 @@ MAINTAINER Josh Samuelson <js@puppet.com>
 ENV HOME /root/
 ENV TERM xterm
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/puppet/bin
-<% if $yum_cache { -%>
-ADD base_cache.repo /etc/yum.repos.d/base_cache.repo
-ADD epel_cache.repo /etc/yum.repos.d/epel_cache.repo
-ADD updates_cache.repo /etc/yum.repos.d/updates_cache.repo
-<% } -%>
 ADD yum.conf /etc/yum.conf
 <% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos openssh-server' -%>
 RUN yum -y install <%= $packages %>
@@ -41,6 +36,11 @@ RUN usermod -aG wheel learning
 ADD bashrc /home/learning/.bashrc
 ADD bash_profile /home/learning/.bash_profile
   <% } -%>
+<% } -%>
+<% if $yum_cache { -%>
+ADD base_cache.repo /etc/yum.repos.d/base_cache.repo
+ADD epel_cache.repo /etc/yum.repos.d/epel_cache.repo
+ADD updates_cache.repo /etc/yum.repos.d/updates_cache.repo
 <% } -%>
 ADD root.cron /var/spool/cron/root
 ADD crond.pam /etc/pam.d/crond
