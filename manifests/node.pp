@@ -17,6 +17,7 @@ define dockeragent::node (
     ensure           => $ensure,
     hostname         => $title,
     image            => $image,
+    net              => 'dockeragent-net',
     command          => '/usr/lib/systemd/systemd',
     ports            => $ports,
     privileged       => $privileged,

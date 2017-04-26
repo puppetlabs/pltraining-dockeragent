@@ -12,11 +12,7 @@ ADD updates_cache.repo /etc/yum.repos.d/updates_cache.repo
 <% } -%>
 ADD yum.conf /etc/yum.conf
 <% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos openssh-server' -%>
-<% if $yum_cache { -%>
-RUN echo "<%= $serverip %> master.puppetlabs.vm" >> /etc/hosts && yum -y install <%= $packages %>
-<% } else { -%>
 RUN yum -y install <%= $packages %>
-<% } -%>
 <% if $install_dev_tools { -%>
 RUN yum -y groupinstall 'Development Tools'
 <% } -%>
@@ -41,10 +37,10 @@ ADD bash_profile /root/.bash_profile
 RUN useradd -ms /bin/bash learning
 RUN echo 'learning:puppet' | chpasswd
 RUN usermod -aG wheel learning
-<% if $lvm_bashrc { -%>
+  <% if $lvm_bashrc { -%>
 ADD bashrc /home/learning/.bashrc
 ADD bash_profile /home/learning/.bash_profile
-<% } -%>
+  <% } -%>
 <% } -%>
 ADD root.cron /var/spool/cron/root
 ADD crond.pam /etc/pam.d/crond
