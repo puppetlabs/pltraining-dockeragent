@@ -2,13 +2,13 @@
 # This should ONLY be run from the main dockeragent class
 
 define dockeragent::image (
-  $registry = undef,
-  $yum_cache = false,
-  $install_agent = true,
-  $lvm_bashrc = false,
+  $registry          = undef,
+  $yum_cache         = false,
+  $gateway_ip        = undef,
+  $install_agent     = true,
+  $lvm_bashrc        = false,
   $install_dev_tools = false,
-  $learning_user = false,
-  $gateway_ip = undef,
+  $learning_user     = false,
 ){
 
   file { "/etc/docker/${title}/":
@@ -36,6 +36,8 @@ define dockeragent::image (
         'gateway_ip'        => $gateway_ip,
         'basename'          => $image_name,
         'yum_cache'         => $yum_cache,
+        'yum_cache_base'    => $yum_cache_base,
+        'mount_yum_cache'   => $mount_yum_cache,
         'install_agent'     => $install_agent,
         'lvm_bashrc'        => $lvm_bashrc,
         'install_dev_tools' => $install_dev_tools,

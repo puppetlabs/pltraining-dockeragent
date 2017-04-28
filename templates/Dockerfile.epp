@@ -32,15 +32,13 @@ ADD bash_profile /root/.bash_profile
 RUN useradd -ms /bin/bash learning
 RUN echo 'learning:puppet' | chpasswd
 RUN usermod -aG wheel learning
-  <% if $lvm_bashrc { -%>
+<% if $lvm_bashrc { -%>
 ADD bashrc /home/learning/.bashrc
 ADD bash_profile /home/learning/.bash_profile
-  <% } -%>
+<% } -%>
 <% } -%>
 <% if $yum_cache { -%>
-ADD base_cache.repo /etc/yum.repos.d/base_cache.repo
-ADD epel_cache.repo /etc/yum.repos.d/epel_cache.repo
-ADD updates_cache.repo /etc/yum.repos.d/updates_cache.repo
+VOLUME /var/yum/mirror /etc/yum.repos.d
 <% } -%>
 ADD root.cron /var/spool/cron/root
 ADD crond.pam /etc/pam.d/crond
