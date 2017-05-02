@@ -4,8 +4,12 @@ define dockeragent::node (
   $ports = undef,
   $privileged = false,
   $image = 'agent',
+  $require_dockeragent = true,
 ) {
-  require dockeragent
+
+  if $require_dockeragent {
+    require dockeragent
+  }
 
   $container_volumes = [
     '/var/yum:/var/yum',
