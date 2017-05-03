@@ -36,8 +36,6 @@ define dockeragent::image (
         'gateway_ip'        => $gateway_ip,
         'basename'          => $image_name,
         'yum_cache'         => $yum_cache,
-        'yum_cache_base'    => $yum_cache_base,
-        'mount_yum_cache'   => $mount_yum_cache,
         'install_agent'     => $install_agent,
         'lvm_bashrc'        => $lvm_bashrc,
         'install_dev_tools' => $install_dev_tools,
