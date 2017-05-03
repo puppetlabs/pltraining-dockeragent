@@ -14,7 +14,7 @@ class dockeragent (
 
   $gateway_ip = "${ip_base}.1"
   $subnet     = "${ip_base}.0/16"
-  $ip_range   = "${ip_base}.2/32"
+  $ip_range   = "${ip_base}.2/24"
 
   file { '/etc/docker/ssl_dir/':
     ensure  => directory,
