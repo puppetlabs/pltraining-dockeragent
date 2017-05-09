@@ -37,8 +37,5 @@ ADD bashrc /home/learning/.bashrc
 ADD bash_profile /home/learning/.bash_profile
 <% } -%>
 <% } -%>
-<% if $yum_cache { -%>
-VOLUME /var/yum/mirror /etc/yum.repos.d
-<% } -%>
 ADD root.cron /var/spool/cron/root
 ADD crond.pam /etc/pam.d/crond

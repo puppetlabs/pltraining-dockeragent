@@ -13,6 +13,8 @@ define dockeragent::node (
 
   $container_volumes = [
     '/var/yum:/var/yum',
+    '/var/cache/yum:/var/cache/yum',
+    '/etc/yum/repos.d:/etc/yum/repos.d',
     '/sys/fs/cgroup:/sys/fs/cgroup:ro',
     '/etc/docker/ssl_dir/:/etc/puppetlabs/puppet/ssl',
   ]
