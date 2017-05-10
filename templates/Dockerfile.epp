@@ -29,9 +29,16 @@ ADD bashrc /root/.bashrc
 ADD bash_profile /root/.bash_profile
 <% } -%>
 <% if $learning_user { -%>
+# Add the learning user
 RUN useradd -ms /bin/bash learning
+# Set the learning user's password to puppet
 RUN echo 'learning:puppet' | chpasswd
+# Add the learning user to the wheel group
 RUN usermod -aG wheel learning
+# Give wheel passwordless sudo
+RUN sed -i '/^#\s*%wheel\s*ALL=(ALL)\s\+NOPASSWD:\s*ALL/s/^# //' /etc/sudoers
+# Add the puppet 
+RUN sed -i '/^Defaults\s*secure_path/s/$/:\/opt\/puppetlabs\/bin/' /etc/sudoers
 <% if $lvm_bashrc { -%>
 ADD bashrc /home/learning/.bashrc
 ADD bash_profile /home/learning/.bash_profile
