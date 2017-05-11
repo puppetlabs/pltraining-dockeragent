@@ -23,6 +23,7 @@ define dockeragent::image (
     "puppet.conf",
     "updates_cache.repo",
     "yum.conf",
+    "gemrc",
   ]
   $image_name = $registry ? {
     undef   => 'centos:7',
@@ -40,6 +41,7 @@ define dockeragent::image (
         'lvm_bashrc'        => $lvm_bashrc,
         'install_dev_tools' => $install_dev_tools,
         'learning_user'     => $learning_user,
+        'gem_source_uri'    => "${gateway_ip}:6789",
         }),
     }
   }
