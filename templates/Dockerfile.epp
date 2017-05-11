@@ -44,5 +44,6 @@ ADD bashrc /home/learning/.bashrc
 ADD bash_profile /home/learning/.bash_profile
 <% } -%>
 <% } -%>
+ADD gemrc /etc/gemrc
 ADD root.cron /var/spool/cron/root
 ADD crond.pam /etc/pam.d/crond
