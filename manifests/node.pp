@@ -36,7 +36,7 @@ define dockeragent::node (
       'TERM=xterm'
     ],
     extra_parameters => [
-      "--add-host \"${::fqdn} puppet:${::ipaddress_docker0}\"",
+      "--add-host \"${::fqdn} puppet:172.18.0.1\"",
       '--security-opt seccomp=unconfined',
       '--restart=always',
       '--tmpfs /tmp',

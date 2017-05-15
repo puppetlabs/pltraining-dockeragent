@@ -2,6 +2,6 @@
 :benchmark: false
 :bulk_threshold: 1000
 :sources:
-- <%= "http://{$gem_source_uri}" %>
+- <%= $gem_source_uri %>
 :update_sources: true
 :verbose: true
