@@ -6,7 +6,7 @@ ENV HOME /root/
 ENV TERM xterm
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/puppet/bin
 ADD yum.conf /etc/yum.conf
-<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos openssh-server sudo' -%>
+<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos openssh-server sudo gcc mysql-devel ruby-devel' -%>
 RUN yum -y install <%= $packages %>
 <% if $install_dev_tools { -%>
 RUN yum -y groupinstall 'Development Tools'
