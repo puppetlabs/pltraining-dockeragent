@@ -5,17 +5,11 @@ MAINTAINER Josh Samuelson <js@puppet.com>
 ENV HOME /root/
 ENV TERM xterm
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/puppet/bin
-<% if $yum_cache { -%>
-ADD base_cache.repo /etc/yum.repos.d/base_cache.repo
-ADD epel_cache.repo /etc/yum.repos.d/epel_cache.repo
-ADD updates_cache.repo /etc/yum.repos.d/updates_cache.repo
-<% } -%>
 ADD yum.conf /etc/yum.conf
-<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos openssh-server' -%>
-<% if $yum_cache { -%>
-RUN echo "<%= $serverip %> master.puppetlabs.vm" >> /etc/hosts && yum -y install <%= $packages %>
-<% } else { -%>
+<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos openssh-server sudo gcc mysql-devel ruby-devel postgresql-libs postgresql-devel' -%>
 RUN yum -y install <%= $packages %>
+<% if $install_dev_tools { -%>
+RUN yum -y groupinstall 'Development Tools'
 <% } -%>
 RUN gem install multipart-post -v 1.2.0
 <% if $install_agent { -%>
@@ -30,9 +24,26 @@ ADD puppet.conf /etc/puppetlabs/puppet/puppet.conf
 ADD download_catalogs.sh /usr/local/bin/download_catalogs.sh
 ADD refresh-mcollective-metadata /usr/local/bin/refresh-mcollective-metadata
 <% } -%>
-<% if $lvm_bashrc { %>
+<% if $lvm_bashrc { -%>
 ADD bashrc /root/.bashrc
 ADD bash_profile /root/.bash_profile
 <% } -%>
+<% if $learning_user { -%>
+# Add the learning user
+RUN useradd -ms /bin/bash learning
+# Set the learning user's password to puppet
+RUN echo 'learning:puppet' | chpasswd
+# Add the learning user to the wheel group
+RUN usermod -aG wheel learning
+# Give wheel passwordless sudo
+RUN sed -i '/^#\s*%wheel\s*ALL=(ALL)\s\+NOPASSWD:\s*ALL/s/^# //' /etc/sudoers
+# Add the puppet 
+RUN sed -i '/^Defaults\s*secure_path/s/$/:\/opt\/puppetlabs\/bin/' /etc/sudoers
+<% if $lvm_bashrc { -%>
+ADD bashrc /home/learning/.bashrc
+ADD bash_profile /home/learning/.bash_profile
+<% } -%>
+<% } -%>
+ADD gemrc /etc/gemrc
 ADD root.cron /var/spool/cron/root
 ADD crond.pam /etc/pam.d/crond

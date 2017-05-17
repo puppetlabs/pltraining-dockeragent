@@ -4,11 +4,22 @@ define dockeragent::node (
   $ports = undef,
   $privileged = false,
   $image = 'agent',
+  $require_dockeragent = true,
+  $ip_base = '172.18.0',
 ) {
-  require dockeragent
+
+  if $require_dockeragent {
+    require dockeragent
+    $real_ip_base = $dockeragent::ip_base
+  } else {
+    $real_ip_base = $ip_base
+  }
 
   $container_volumes = [
     '/var/yum:/var/yum',
+    '/var/cache/yum:/var/cache/yum',
+    '/etc/yum.repos.d:/etc/yum.repos.d',
+    '/opt/puppetlabs/server/data:/opt/puppetlabs/server/data',
     '/sys/fs/cgroup:/sys/fs/cgroup:ro',
     '/etc/docker/ssl_dir/:/etc/puppetlabs/puppet/ssl',
   ]
@@ -17,6 +28,7 @@ define dockeragent::node (
     ensure           => $ensure,
     hostname         => $title,
     image            => $image,
+    net              => 'dockeragent-net',
     command          => '/usr/lib/systemd/systemd',
     ports            => $ports,
     privileged       => $privileged,
@@ -28,7 +40,7 @@ define dockeragent::node (
       'TERM=xterm'
     ],
     extra_parameters => [
-      "--add-host \"${::fqdn} puppet:${::ipaddress_docker0}\"",
+      "--add-host \"${::fqdn} puppet:${real_ip_base}\"",
       '--security-opt seccomp=unconfined',
       '--restart=always',
       '--tmpfs /tmp',
