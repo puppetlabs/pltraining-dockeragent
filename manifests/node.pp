@@ -10,9 +10,9 @@ define dockeragent::node (
 
   if $require_dockeragent {
     require dockeragent
-    $real_ip_base = $dockeragent::ip_base
+    $gateway_ip = $dockeragent::gateway_ip
   } else {
-    $real_ip_base = $ip_base
+    $gateway_ip = "${ip_base}.1"
   }
 
   $container_volumes = [
@@ -40,7 +40,7 @@ define dockeragent::node (
       'TERM=xterm'
     ],
     extra_parameters => [
-      "--add-host \"${::fqdn} puppet:${real_ip_base}\"",
+      "--add-host \"${::fqdn} puppet:${gateway_ip}\"",
       '--security-opt seccomp=unconfined',
       '--restart=always',
       '--tmpfs /tmp',
