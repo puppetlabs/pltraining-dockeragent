@@ -40,7 +40,7 @@ define dockeragent::node (
       'TERM=xterm'
     ],
     extra_parameters => [
-      "--add-host \"${::fqdn} puppet:${real_ip_base}\"",
+      "--add-host \"${::fqdn} puppet:${real_ip_base}.1\"",
       '--security-opt seccomp=unconfined',
       '--restart=always',
       '--tmpfs /tmp',
