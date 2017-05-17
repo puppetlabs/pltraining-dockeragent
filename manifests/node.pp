@@ -5,10 +5,14 @@ define dockeragent::node (
   $privileged = false,
   $image = 'agent',
   $require_dockeragent = true,
+  $ip_base = '172.18.0',
 ) {
 
   if $require_dockeragent {
     require dockeragent
+    $real_ip_base = $dockeragent::ip_base
+  } else {
+    $real_ip_base = $ip_base
   }
 
   $container_volumes = [
@@ -36,7 +40,7 @@ define dockeragent::node (
       'TERM=xterm'
     ],
     extra_parameters => [
-      "--add-host \"${::fqdn} puppet:172.18.0.1\"",
+      "--add-host \"${::fqdn} puppet:${real_ip_base}\"",
       '--security-opt seccomp=unconfined',
       '--restart=always',
       '--tmpfs /tmp',
