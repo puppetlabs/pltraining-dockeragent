@@ -18,10 +18,8 @@ define dockeragent::image (
 
   $docker_files = [
     "Dockerfile",
-    "base_cache.repo",
-    "epel_cache.repo",
     "puppet.conf",
-    "updates_cache.repo",
+    "local_cache.repo",
     "yum.conf",
     "gemrc",
   ]
