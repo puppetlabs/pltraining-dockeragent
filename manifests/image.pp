@@ -18,10 +18,8 @@ define dockeragent::image (
 
   $docker_files = [
     "Dockerfile",
-    "base_cache.repo",
-    "epel_cache.repo",
     "puppet.conf",
-    "updates_cache.repo",
+    "local_cache.repo",
     "yum.conf",
     "gemrc",
   ]
@@ -29,6 +27,11 @@ define dockeragent::image (
     undef   => 'centos:7',
     default => "${registry}/centos:7",
   }
+  $gem_source_uri = $gateway_ip ? {
+    undef   => 'file:///var/cache/rubygems/',
+    default => "http://${gateway_ip}:6789",
+  }
+
   $docker_files.each |$docker_file|{
     file { "/etc/docker/${title}/${docker_file}":
       ensure            => file,
@@ -41,7 +44,7 @@ define dockeragent::image (
         'lvm_bashrc'        => $lvm_bashrc,
         'install_dev_tools' => $install_dev_tools,
         'learning_user'     => $learning_user,
-        'gem_source_uri'    => "http://${gateway_ip}:6789",
+        'gem_source_uri'    => $gem_source_uri,
         }),
     }
   }
