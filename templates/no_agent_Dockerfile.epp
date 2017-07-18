@@ -12,18 +12,9 @@ RUN yum -y install <%= $packages %>
 RUN yum -y groupinstall 'Development Tools'
 <% } -%>
 RUN gem install multipart-post -v 1.2.0
-<% if $install_agent { -%>
-RUN rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-<%= $os_major %>.noarch.rpm
-RUN yum -y install puppet-agent
-<% } -%>
 RUN echo 'root:puppet' | chpasswd
 RUN mkdir /var/run/sshd
 RUN systemctl enable sshd.service
-<% if $install_agent { -%>
-ADD puppet.conf /etc/puppetlabs/puppet/puppet.conf
-ADD download_catalogs.sh /usr/local/bin/download_catalogs.sh
-ADD refresh-mcollective-metadata /usr/local/bin/refresh-mcollective-metadata
-<% } -%>
 <% if $lvm_bashrc { -%>
 ADD bashrc /root/.bashrc
 ADD bash_profile /root/.bash_profile
