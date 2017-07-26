@@ -7,6 +7,7 @@ class dockeragent (
   $install_dev_tools     = false,
   $learning_user         = false,
   $ip_base               = '172.18.0',
+  $image_name            = 'agent',
 ){
   include docker
 
@@ -43,7 +44,7 @@ class dockeragent (
      gateway_ip        => $gateway_ip,
    }
 
-   dockeragent::image { 'agent':
+   dockeragent::image { $image_name:
      install_agent     => true,
      image_name        => 'no_agent',
      registry          => $registry,
