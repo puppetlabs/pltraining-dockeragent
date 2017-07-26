@@ -22,6 +22,7 @@ define dockeragent::node (
     '/opt/puppetlabs/server/data:/opt/puppetlabs/server/data',
     '/sys/fs/cgroup:/sys/fs/cgroup:ro',
     '/etc/docker/ssl_dir/:/etc/puppetlabs/puppet/ssl',
+    '/var/cache/rubygems:/var/cache/rubygems',
   ]
 
   docker::run { $title:
