@@ -26,8 +26,6 @@
   "description": "Important! This is not the module you are looking for\n    unless you are a trainer teaching Puppet Labs training courses!\n    - Configures and sets up containerized agents for Puppet Classroom trainings.",
   "dependencies": [
     {"name":"garethr/docker",    "version_requirement":">=5.1.0"},
-    {"name":"hunner/wordpress",  "version_requirement":">=1.0.0"},
-    {"name":"puppetlabs/apache", "version_requirement":">=1.0.0"},
     {"name":"puppetlabs/concat", "version_requirement":">=2.0.0"}
   ]
 }
