@@ -40,10 +40,7 @@ define dockeragent::image (
     }
   }
 
-  $gem_source_uri = $gateway_ip ? {
-    undef   => 'file:///var/cache/rubygems/',
-    default => "http://${gateway_ip}:6789",
-  }
+  $gem_source_uri = 'file:///var/cache/rubygems/'
 
   $docker_files.each |$docker_file|{
     file { "/etc/docker/${title}/${docker_file['filename']}":
