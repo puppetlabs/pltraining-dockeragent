@@ -8,6 +8,7 @@ class dockeragent (
   $learning_user         = false,
   $ip_base               = '172.18.0',
   $image_name            = 'agent',
+  $disable_mco           = false,
 ){
   include docker
 
@@ -42,6 +43,7 @@ class dockeragent (
      install_dev_tools => $install_dev_tools,
      learning_user     => $learning_user,
      gateway_ip        => $gateway_ip,
+     disable_mco       => $disable_mco,
    }
 
    dockeragent::image { $image_name:
@@ -54,6 +56,7 @@ class dockeragent (
      learning_user     => $learning_user,
      gateway_ip        => $gateway_ip,
      require           => Dockeragent::Image['no_agent'],
+     disable_mco       => $disable_mco,
    }
 
 }
