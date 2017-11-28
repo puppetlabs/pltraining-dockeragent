@@ -10,6 +10,7 @@ define dockeragent::image (
   $install_dev_tools = false,
   $learning_user     = false,
   $image_name        = undef,
+  $disable_mco       = false,
 ){
 
   file { "/etc/docker/${title}/":
@@ -54,6 +55,7 @@ define dockeragent::image (
         'install_dev_tools' => $install_dev_tools,
         'learning_user'     => $learning_user,
         'gem_source_uri'    => $gem_source_uri,
+        'disable_mco'       => $disable_mco,
         }),
     }
   }
