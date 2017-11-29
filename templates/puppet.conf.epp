@@ -14,5 +14,5 @@
     graph = true
     pluginsync = true
     <%- if $disable_mco { -%>
-    skip_tags = puppet_enterprise::mcollective
+    skip_tags = mcollective
     <%- } -%>
