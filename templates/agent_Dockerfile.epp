@@ -5,7 +5,7 @@ MAINTAINER Josh Samuelson <js@puppet.com>
 ENV HOME /root/
 ENV TERM xterm
 ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/puppet/bin
-RUN rpm -Uvh https://yum.puppetlabs.com/puppetlabs-release-pc1-el-<%= $os_major %>.noarch.rpm
+RUN rpm -Uvh https://yum.puppetlabs.com/puppet5/puppet-release-el-<%= $os_major %>.noarch.rpm
 RUN yum -y install puppet-agent
 ADD puppet.conf /etc/puppetlabs/puppet/puppet.conf
 ADD download_catalogs.sh /usr/local/bin/download_catalogs.sh
