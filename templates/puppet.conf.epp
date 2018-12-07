@@ -13,6 +13,3 @@
     localconfig = $vardir/localconfig
     graph = true
     pluginsync = true
-    <%- if $disable_mco { -%>
-    skip_tags = mcollective
-    <%- } -%>

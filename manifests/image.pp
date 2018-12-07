@@ -10,7 +10,6 @@ define dockeragent::image (
   $install_dev_tools = false,
   $learning_user     = false,
   $image_name        = undef,
-  $disable_mco       = false,
 ){
 
   file { "/etc/docker/${title}/":
@@ -55,7 +54,6 @@ define dockeragent::image (
         'install_dev_tools' => $install_dev_tools,
         'learning_user'     => $learning_user,
         'gem_source_uri'    => $gem_source_uri,
-        'disable_mco'       => $disable_mco,
         }),
     }
   }
@@ -79,25 +77,13 @@ define dockeragent::image (
     source  => 'puppet:///modules/dockeragent/download_catalogs.sh',
   }
 
-  file { "/etc/docker/${title}/refresh-mcollective-metadata":
-    ensure  => file,
-    mode    => '0755',
-    source  => 'puppet:///modules/dockeragent/refresh-mcollective-metadata',
-  }
-
-  file { "/etc/docker/${title}/root.cron":
-    ensure  => file,
-    mode    => '0644',
-    source  => 'puppet:///modules/dockeragent/root.cron',
-  }
-  
   file { "/etc/docker/${title}/crond.pam":
     ensure  => file,
     mode    => '0644',
     source  => 'puppet:///modules/dockeragent/crond.pam',
   }
 
-  docker::image {$title:
+  docker::image { $title:
     docker_dir => "/etc/docker/${title}/",
     require    => File["/etc/docker/${title}/"],
   }

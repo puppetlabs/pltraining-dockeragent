@@ -9,4 +9,3 @@ RUN rpm -Uvh https://yum.puppetlabs.com/puppet6/puppet6-release-el-<%= $os_major
 RUN yum -y install puppet-agent
 ADD puppet.conf /etc/puppetlabs/puppet/puppet.conf
 ADD download_catalogs.sh /usr/local/bin/download_catalogs.sh
-ADD refresh-mcollective-metadata /usr/local/bin/refresh-mcollective-metadata
