@@ -26,27 +26,29 @@ define dockeragent::node (
   ]
 
   docker::run { $title:
-    ensure           => $ensure,
-    hostname         => $title,
-    image            => $image,
-    net              => 'dockeragent-net',
-    command          => '/usr/lib/systemd/systemd',
-    ports            => $ports,
-    privileged       => $privileged,
-    volumes          => $container_volumes,
-    env              =>  [
+    ensure                => $ensure,
+    hostname              => $title,
+    image                 => $image,
+    net                   => 'dockeragent-net',
+    command               => '/usr/lib/systemd/systemd',
+    ports                 => $ports,
+    privileged            => $privileged,
+    volumes               => $container_volumes,
+    env                   =>  [
       'RUNLEVEL=3',
       'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/bin',
       'HOME=/root/',
       'TERM=xterm'
     ],
-    extra_parameters => [
+    extra_parameters      => [
       "--add-host \"${::fqdn} puppet:${gateway_ip}\"",
       '--security-opt seccomp=unconfined',
       '--restart=always',
       '--tmpfs /tmp',
       '--tmpfs /run',
     ],
+    health_check_cmd      => '/bin/true',
+    health_check_interval => 600,
   }
 
 }

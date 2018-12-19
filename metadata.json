@@ -16,7 +16,7 @@
     }
   ],
   "name": "pltraining-dockeragent",
-  "version": "0.0.16",
+  "version": "0.0.17",
   "author": "pltraining",
   "summary": "Manages Puppet Labs training classroom environments",
   "license": "Apache 2.0",
@@ -25,7 +25,6 @@
   "issues_url": "https://github.com/puppetlabs/pltraining-dockeragent/issues",
   "description": "Important! This is not the module you are looking for\n    unless you are a trainer teaching Puppet Labs training courses!\n    - Configures and sets up containerized agents for Puppet Classroom trainings.",
   "dependencies": [
-    {"name":"garethr/docker",    "version_requirement":">=5.1.0"},
-    {"name":"puppetlabs/concat", "version_requirement":">=2.0.0"}
+    {"name":"puppetlabs/docker", "version_requirement":"3.1.0"}
   ]
 }
