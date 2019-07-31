@@ -1,5 +1,0 @@
-[updates_cache]
-baseurl=https://<%= $yum_server %>:8140/packages/yum/updates/x86_64
-enabled=1
-name=Updates repo hosted on the master
-priority=1

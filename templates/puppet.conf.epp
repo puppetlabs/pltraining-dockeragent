@@ -5,7 +5,6 @@
     basemodulepath = /etc/puppetlabs/puppet/modules:/opt/puppet/share/puppet/modules
     user  = pe-puppet
     group = pe-puppet
-    archive_files = true
     server = <%= $::fqdn %>
 
 [agent]

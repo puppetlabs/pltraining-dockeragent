@@ -1,0 +1,39 @@
+# Builds a basic Centos<%= $os_major %> container without pe-agent installed
+# This image is for training purposes and is not intended for production environments.
+FROM <%= $basename %>
+MAINTAINER Services Portfolio <services-portfolio@puppet.com>
+ENV HOME /root/
+ENV TERM xterm
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/puppet/bin
+ADD yum.conf /etc/yum.conf
+<% $packages = 'tar dmidecode which logrotate cyrus-sasl libxslt cronie pciutils git rubygems vim tree csh zsh net-tools wget redhat-logos openssh-server sudo gcc mysql-devel ruby-devel postgresql-libs postgresql-devel redhat-lsb-core' -%>
+RUN yum -y install <%= $packages %>
+<% if $install_dev_tools { -%>
+RUN yum -y groupinstall 'Development Tools'
+<% } -%>
+RUN gem install multipart-post -v 1.2.0
+RUN echo 'root:puppet' | chpasswd
+RUN mkdir /var/run/sshd
+RUN systemctl enable sshd.service
+<% if $lvm_bashrc { -%>
+ADD bashrc /root/.bashrc
+ADD bash_profile /root/.bash_profile
+<% } -%>
+<% if $learning_user { -%>
+# Add the learning user
+RUN useradd -ms /bin/bash learning
+# Set the learning user's password to puppet
+RUN echo 'learning:puppet' | chpasswd
+# Add the learning user to the wheel group
+RUN usermod -aG wheel learning
+# Give wheel passwordless sudo
+RUN sed -i '/^#\s*%wheel\s*ALL=(ALL)\s\+NOPASSWD:\s*ALL/s/^# //' /etc/sudoers
+# Add the puppet 
+RUN sed -i '/^Defaults\s*secure_path/s/$/:\/opt\/puppetlabs\/bin/' /etc/sudoers
+<% if $lvm_bashrc { -%>
+ADD bashrc /home/learning/.bashrc
+ADD bash_profile /home/learning/.bash_profile
+<% } -%>
+<% } -%>
+ADD gemrc /etc/gemrc
+ADD crond.pam /etc/pam.d/crond

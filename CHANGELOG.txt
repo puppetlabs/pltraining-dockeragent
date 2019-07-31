@@ -1,6 +1,17 @@
-# pltraining/dockeratent
+# pltraining/dockeragent
 
 ## Release Notes
+
+=======
+## v0.0.14
+* Use no-agent image as base for agent image
+* Single local yum repo
+
+## v0.0.13
+* Fix path inside containers
+
+## v0.0.12
+* Use centos:7 container
 
 ## v0.0.11
 

@@ -8,7 +8,7 @@ Facter.add(:docker_hosts) do
     containers.shift
     containers.each do |line|
       name = line.split.last
-      hosts[name] = Facter::Util::Resolution.exec("docker inspect -f '{{ .NetworkSettings.IPAddress }}' #{name}")
+      hosts[name] = Facter::Util::Resolution.exec("docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' #{name}")
     end
 
     hosts

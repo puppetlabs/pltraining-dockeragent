@@ -1,0 +1,11 @@
+# Builds a basic Centos<%= $os_major %> container with pe-agent installed
+# This image is for training purposes and is not intended for production environments.
+FROM <%= $basename %>
+MAINTAINER Services Portfolio <services-portfolio@puppet.com>
+ENV HOME /root/
+ENV TERM xterm
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/puppetlabs/puppet/bin
+RUN rpm -Uvh https://yum.puppetlabs.com/puppet6/puppet6-release-el-<%= $os_major %>.noarch.rpm
+RUN yum -y install puppet-agent
+ADD puppet.conf /etc/puppetlabs/puppet/puppet.conf
+ADD download_catalogs.sh /usr/local/bin/download_catalogs.sh

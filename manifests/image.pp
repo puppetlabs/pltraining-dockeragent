@@ -2,11 +2,14 @@
 # This should ONLY be run from the main dockeragent class
 
 define dockeragent::image (
-  $registry = undef,
-  $yum_server = 'master.puppetlabs.vm',
-  $yum_cache = false,
-  $install_agent = true,
-  $lvm_bashrc = false,
+  $registry          = undef,
+  $yum_cache         = false,
+  $gateway_ip        = undef,
+  $install_agent     = true,
+  $lvm_bashrc        = false,
+  $install_dev_tools = false,
+  $learning_user     = false,
+  $image_name        = undef,
 ){
 
   file { "/etc/docker/${title}/":
@@ -14,28 +17,43 @@ define dockeragent::image (
     require => Class['docker'],
   }
 
-  $docker_files = [
-    "Dockerfile",
-    "base_cache.repo",
-    "epel_cache.repo",
-    "puppet.conf",
-    "updates_cache.repo",
-    "yum.conf",
-  ]
-  $image_name = $registry ? {
-    undef   => 'maci0/systemd',
-    default => "${registry}/maci0/systemd",
+  if $install_agent {
+    $dockerfile_template = 'agent_Dockerfile.epp'
+  } else {
+    $dockerfile_template = 'no_agent_Dockerfile.epp'
   }
+
+  $docker_files = [
+    {'filename' => "Dockerfile",       'template' => $dockerfile_template},
+    {'filename' => "puppet.conf",      'template' => 'puppet.conf.epp'},
+    {'filename' => "local_cache.repo", 'template' => 'local_cache.repo.epp'},
+    {'filename' => "yum.conf",         'template' => 'yum.conf.epp'},
+    {'filename' => "gemrc",            'template' => 'gemrc.epp'}
+  ]
+
+  if $image_name {
+    $actual_image_name = $image_name
+  } else {
+    $actual_image_name = $registry ? {
+      undef   => 'centos:7',
+      default => "${registry}/centos:7",
+    }
+  }
+
+  $gem_source_uri = 'file:///var/cache/rubygems/'
+
   $docker_files.each |$docker_file|{
-    file { "/etc/docker/${title}/${docker_file}":
+    file { "/etc/docker/${title}/${docker_file['filename']}":
       ensure            => file,
-      content           => epp("dockeragent/${docker_file}.epp",{
-        'os_major'      => $::os['release']['major'],
-        'yum_server'    => $yum_server,
-        'basename'      => $image_name,
-        'yum_cache'     => $yum_cache,
-        'install_agent' => $install_agent,
-        'lvm_bashrc'    => $lvm_bashrc,
+      content           => epp("dockeragent/${docker_file['template']}",{
+        'os_major'          => $::os['release']['major'],
+        'gateway_ip'        => $gateway_ip,
+        'basename'          => $actual_image_name,
+        'yum_cache'         => $yum_cache,
+        'lvm_bashrc'        => $lvm_bashrc,
+        'install_dev_tools' => $install_dev_tools,
+        'learning_user'     => $learning_user,
+        'gem_source_uri'    => $gem_source_uri,
         }),
     }
   }
@@ -59,25 +77,13 @@ define dockeragent::image (
     source  => 'puppet:///modules/dockeragent/download_catalogs.sh',
   }
 
-  file { "/etc/docker/${title}/refresh-mcollective-metadata":
-    ensure  => file,
-    mode    => '0755',
-    source  => 'puppet:///modules/dockeragent/refresh-mcollective-metadata',
-  }
-
-  file { "/etc/docker/${title}/root.cron":
-    ensure  => file,
-    mode    => '0644',
-    source  => 'puppet:///modules/dockeragent/root.cron',
-  }
-  
   file { "/etc/docker/${title}/crond.pam":
     ensure  => file,
     mode    => '0644',
     source  => 'puppet:///modules/dockeragent/crond.pam',
   }
 
-  docker::image {$title:
+  docker::image { $title:
     docker_dir => "/etc/docker/${title}/",
     require    => File["/etc/docker/${title}/"],
   }
