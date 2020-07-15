@@ -25,6 +25,6 @@
   "issues_url": "https://github.com/puppetlabs/pltraining-dockeragent/issues",
   "description": "Important! This is not the module you are looking for\n    unless you are a trainer teaching Puppet Labs training courses!\n    - Configures and sets up containerized agents for Puppet Classroom trainings.",
   "dependencies": [
-    {"name":"puppetlabs/docker", "version_requirement":"3.1.0"}
+    {"name":"puppetlabs/docker", "version_requirement":"3.l0.0"}
   ]
 }
